@@ -58,6 +58,94 @@ timer.addEventListener('Click', function () {
       }
     }, 1000);
   }
-  WebGL2RenderingContext(questionIndex);
+  render(questionIndex);
 });
 
+
+function render(questionIndex) {
+
+  questionsDiv.innerHTML = "";
+  ulCreate.innerHTML = "";
+  // for loop through all array 
+  for (var i = 0; i < questions.length; i++){
+    // appends questions title only 
+    const userQuestion = questions[questionIndex].title;
+    const userChoices = questions[questionIndex].choices;
+    questionsDiv.textContent = userQuestion;
+
+  }}
+
+  userChoices.forEach(function (newItem) {
+    const listItem = document.createElement("li");
+    listItem.textContext = newItem;
+    questionsDiv.appendChild(ulCreate);
+    ulCreate.appendChild(listItem);
+    listItem.addEventListener("click", (compare));
+  })
+
+  // Event to compare choices with answers
+  function compare(event) {
+    const element = event.target;
+    
+    if (element.matches("li")) {
+
+      const createDiv = document.createElement("div");
+      createDiv.setAttribute("id", "createDiv");
+
+      if (element.textContent == questions[questionIndex].answer) {
+        score++;
+        createDiv.textContent = "Correct! The answer is: " + questions[questionIndex].answer;
+
+      } else {
+        // deduct -5 seconds for each wrong answer
+        secondsLeft = secondsLeft - penalty;
+        createDiv.textContent = "Wrong! The correct answer is: " + questions[questionIndex].answer;
+      }
+
+    }
+    // Question Index determines number question is on 
+    questionIndex++;
+
+    if (questionIndex >= questions.length) {
+      // all done will append last page with user stats
+      allDone();
+      createDiv.textContent = "End of quiz!" + "" + "you got " + score + "/" + questions.length + " Correct!";
+      } else {
+        render(questionIndex);
+      }
+      questionsDiv.appendChild(createDiv);
+
+  }
+// all done will append last page 
+function allDone() {
+  questionsDiv.innerHTML = "";
+  currentTime.innerHTML = "";
+
+  // Heading
+
+  const createH1 = document.createElement("h1");
+  createH1.setAttribute("id", "createH1");
+  createH1.textContent = "All Done!"
+
+  questionsDiv.appendChild(createH1);
+
+  // Paragraph
+  const createP = document.createElement("p");
+  createP.setAttribute("id", "createP");
+
+  questionsDiv.appendChild(createP);
+
+  // Caculate time remaining and replace it with the score 
+  if(secondsLeft >= 0) {
+    const timeRemaining = secondsLeft;
+    const createP2 = document.createElement("p");
+    clearInterval(holdInterval);
+    createP.textContent = "your final score is : " + timeRemaining;
+
+    questionsDiv.appendChild(createP2);
+  }
+
+  // label
+  
+
+}
